@@ -60,7 +60,7 @@ public class MainController {
         model.addAttribute("projects", projectList);
         model.addAttribute("user", user);
 
-        return "main";  // main.jsp 페이지로 이동
+        return "main";
     }
 
 
