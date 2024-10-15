@@ -1,0 +1,59 @@
+Projects: 프로젝트 정보 (
+PJID (PK): 프로젝트의 고유 식별자.
+PJName: 프로젝트의 이름.
+TeamID (FK): 프로젝트가 속한 팀의 ID.
+detail: 프로젝트에 대한 설명이나 세부 정보.
+progress: 프로젝트의 진행 상태, 0%~100% 같은 숫자형으로 저장 가능.
+deadline: 프로젝트의 마감 기한. )
+
+
+Tasks: 각 프로젝트 내에서 팀원의 할 일 
+(TaskID (PK): 작업의 고유 식별자.
+TeamID (FK): 작업이 속한 팀의 ID.
+PJID (FK): 작업이 속한 프로젝트의 ID.
+userID (FK): 해당 작업을 담당하는 사용자 ID.
+tasks: 작업의 제목이나 설명.
+status: 작업의 현재 상태 (예: To Do, In Progress, Done).
+RecommendedPriority: 작업의 추천 우선순위.
+EstimatedTime: 작업의 예상 소요 시간.
+ActualTime: 작업의 실제 소요 시간. )
+
+Users: 사용자 정보 (
+userID (PK): 사용자의 고유 식별자.
+userPassword : 사용자의 비밀번호.
+userName: 사용자의 이름 또는 닉네임.
+email: 사용자의 이메일 주소.
+role: 사용자의 역할 (예: 관리자, 일반 사용자 등). )
+
+Comments: 작업에 대한 코멘트 (CID (PK): 코멘트의 고유 식별자.
+TaskID (FK): 코멘트가 달린 작업의 ID.
+userID (FK): 코멘트를 작성한 사용자 ID.
+PJID (FK): 코멘트가 속한 프로젝트의 ID.
+Content: 코멘트의 내용.
+CommentsTime: 코멘트 작성 시간.
+CommentType: 코멘트 유형 (예: 질문, 피드백, 상태 변경).
+ParentID: 부모 코멘트의 ID (대댓글일 경우). )
+
+Teams: 프로젝트 팀 정보 (
+TeamID (PK): 팀의 고유 식별자.
+TeamName: 팀의 이름.
+PJID (FK): 팀이 속한 프로젝트의 ID. )
+
+
+TeamMembers : 팀 멤버 정보 (
+TeamID (FK): 팀의 고유 식별자.
+UserID (FK): 팀원의 고유 식별자.
+Role (FK): 팀 내에서 해당 사용자의 역할 (예: 개발자, 디자이너, 관리자 등). )
+
+TaskHistory : 작업 완료 시간 기록 (
+HistoryID (PK): 각 기록에 대한 고유 ID.
+TaskID (FK): 해당 기록이 어느 작업(Task)에 속하는지 나타내는 참조.
+ChangeType: 어떤 변화가 일어났는지를 기록하는 필드 (예: 상태 변경, 우선순위 변경, 작업 시간 수정 등).
+OldStatus: 변경 전 작업의 상태 (예: In Progress, Completed).
+NewStatus: 변경 후 작업의 상태.
+OldPriority: 변경 전 작업의 우선순위.
+NewPriority: 변경 후 작업의 우선순위.
+OldEstimatedTime: 변경 전 작업의 예상 시간.
+NewEstimatedTime: 변경 후 작업의 예상 시간.
+UserID (FK): 이 변경을 수행한 사용자 ID.
+ChangeTimestamp: 변경된 날짜 및 시간. )
