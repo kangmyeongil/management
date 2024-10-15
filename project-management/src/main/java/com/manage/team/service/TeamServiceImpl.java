@@ -1,4 +1,4 @@
-package com.manage.project.service;
+package com.manage.team.service;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -7,20 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.manage.project.domain.ProjectDO;
 import com.manage.project.dao.ProjectDAO;
+import com.manage.project.domain.ProjectDO;
+import com.manage.team.domain.TeamsDO;
 
-@Service("projectService")
-public class ProjectServiceImpl implements ProjectService {
+@Service("teamService")
+public class TeamServiceImpl implements TeamService {
 	@Autowired
-	@Qualifier("projectDAO")
+	@Qualifier("teamDAO")
 	private ProjectDAO dao;
 	
 	@Override
-	public int insertProject(ProjectDO pj) {
+	public int insertTeam(TeamsDO t) {
 		// TODO Auto-generated method stub
 		try {
-			return dao.insertProject(pj);
+			return dao.insertTeam(t);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,10 +30,10 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public int updateProject(ProjectDO pj) {
+	public int updateTeam(TeamsDO t) {
 		// TODO Auto-generated method stub
 		try {
-			return dao.updateProject(pj);
+			return dao.updateTeam(t);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,10 +42,10 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public int deleteProject(ProjectDO pj) {
+	public int deleteTeam(TeamsDO t) {
 		// TODO Auto-generated method stub
 		try {
-			return dao.deleteProject(pj);
+			return dao.deleteTeam(t);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,10 +54,10 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ProjectDO getProject(ProjectDO pj) {
+	public TeamsDO getTeam(TeamsDO t) {
 		// TODO Auto-generated method stub
 		try {
-			return dao.getProject(pj);
+			return dao.getTeam(t);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,10 +66,10 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectDO> getProjectList(String teamId) {
+	public List<TeamsDO> getTeamList(TeamsDO t) {
 		// TODO Auto-generated method stub
 		try {
-			return dao.getProjectList(teamId);
+			return dao.getTeamList(t);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

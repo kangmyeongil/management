@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,15 +36,21 @@ public class LoginController {
     }
     
     @PostMapping("login")
-    public String loginProc(UserDO user, HttpSession session, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String loginProc(UserDO user, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
+        // 기존 세션 무효화 후 새로운 세션 생성
+        session.invalidate();
+        session = request.getSession(true);
+
         UserDO user1 = userService.getUser(user);
-        
-        System.out.println("\n\n" + user1 + "\n\n");
-        System.out.println("\n\n" + user + "\n\n");
 
         if (user1 != null && user1.getUserpassword().equals(user.getUserpassword())) {
-            session.setAttribute("user", user1); // 새로운 세션에 사용자 정보 저장
-            System.out.println("새로 세션 저장 완료");
+            System.out.println(user1.getUsername() + "님 접속");
+
+            // 세션에 사용자 정보 저장
+            session.setAttribute("user", user1);
+            
+            // 세션 정보 로그 확인
+            System.out.println("세션에 저장된 사용자 정보: " + session.getAttribute("user"));
 
             return "redirect:/main";  // main 페이지로 리다이렉트
         } else {
@@ -52,6 +59,10 @@ public class LoginController {
             return "redirect:/login";  // 로그인 페이지로 리다이렉트
         }
     }
+
+
+
+
 
 
     @GetMapping("signUp")
@@ -91,6 +102,17 @@ public class LoginController {
     @RequestMapping("/logout")
     public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         session.invalidate(); // 세션 무효화
+
+        // 쿠키 삭제
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setMaxAge(0); // 쿠키 삭제
+                response.addCookie(cookie); // 클라이언트에 반영
+            }
+        }
+
         return "redirect:/login"; // 로그인 페이지로 리다이렉트
     }
+
 }

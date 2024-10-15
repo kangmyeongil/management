@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.manage.project.domain.ProjectDO;
-import com.manage.user.domain.UserDO;
 
 @Repository("projectDAO")
 public class ProjectDAO2 extends JdbcDaoSupport implements ProjectDAO {
@@ -35,7 +34,7 @@ public class ProjectDAO2 extends JdbcDaoSupport implements ProjectDAO {
 	
 	private final String USER_GET = "select * from PROJECTS where UserID = ?";
 	
-	private final String USER_LIST = "select * from PROJECTS order by PROJECTID desc";
+	private final String USER_LIST = "select * from PROJECTS where TeamID = ? order by PROJECTID desc";
 	
 	
 	
@@ -68,10 +67,15 @@ public class ProjectDAO2 extends JdbcDaoSupport implements ProjectDAO {
 	    }
 	}
 
-	@Override
-	public List<ProjectDO> getProjectList(String userId) throws SQLException {
-		// TODO Auto-generated method stub
-		return jdbcTemplate.query(USER_LIST, projectRowMapper);
+//	@Override
+//	public List<ProjectDO> getProjectList(ProjectDO pj) throws SQLException {
+//		// TODO Auto-generated method stub
+//		return jdbcTemplate.query(USER_LIST, projectRowMapper, pj.getTeamid());
+//	}
+	
+	public List<ProjectDO> getProjectList(String teamId) throws SQLException {
+	    return jdbcTemplate.query(USER_LIST, projectRowMapper, teamId);
 	}
+
 
 }

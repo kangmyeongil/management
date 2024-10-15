@@ -30,38 +30,28 @@ public class MainController {
     private ProjectService projectService;
     
     @GetMapping("/main")
-    public String showUserProjects(HttpSession session, HttpServletResponse response, Model model) {
-    	
+    public String showUserProjects(HttpSession session, Model model) {
+        // 세션에서 사용자 정보 가져오기
         UserDO user = (UserDO) session.getAttribute("user");
         
-        // 세션에서 가져온 사용자 정보 출력
-        System.out.println("메인 페이지에서 가져온 사용자 정보: " + user);
-        
+        // 사용자가 로그인되지 않았으면 로그인 페이지로 리다이렉트
         if (user == null) {
             return "redirect:/login";
         }
 
-
-
-        // 팀 ID 가져오기 (teamId가 null이거나 빈 값인 경우 처리)
-        String teamId = user.getTeamid();  // UserDO에 팀 ID가 있다고 가정
-        List<ProjectDO> projectList;
-
-        System.out.println("\n\n" + teamId + "\n\n");
-        if (teamId == null || teamId.isEmpty()) {
-            // 팀 ID가 없는 경우 빈 프로젝트 목록 설정
-            projectList = new ArrayList<>();
+        // 사용자 팀 ID를 이용해 프로젝트 목록 조회
+        String teamId = user.getTeamid();
+        
+        if (teamId != null) {
+            List<ProjectDO> projectList = projectService.getProjectList(teamId);
+            model.addAttribute("projects", projectList);
         } else {
-            // 팀 ID가 있는 경우 해당 팀의 프로젝트 목록을 가져온다
-            projectList = projectService.getProjectList(teamId);
+            model.addAttribute("projects", new ArrayList<>()); // 팀 ID가 없으면 빈 리스트 추가
         }
 
-        // 모델에 프로젝트 목록과 사용자 정보 추가
-        model.addAttribute("projects", projectList);
-        model.addAttribute("user", user);
-
-        return "main";
+        return "main";  // 메인 페이지로 이동
     }
+
 
 
 

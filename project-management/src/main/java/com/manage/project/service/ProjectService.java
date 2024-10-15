@@ -9,5 +9,5 @@ public interface ProjectService {
 	public int updateProject(ProjectDO pj);
 	public int deleteProject(ProjectDO pj);
 	public ProjectDO getProject(ProjectDO pj);
-	public List<ProjectDO> getProjectList(String userId);
+	public List<ProjectDO> getProjectList(String teamId);
 }
